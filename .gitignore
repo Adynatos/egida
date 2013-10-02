@@ -37,3 +37,7 @@ nosetests.xml
 # Virtualenv 
 flask/
 virtualenv.py
+
+#Database
+migrations/
+*.db
