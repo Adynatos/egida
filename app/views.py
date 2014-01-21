@@ -47,7 +47,7 @@ def new_post():
 @app.route('/posts/')
 #@login_required
 def posts():
-    posts = [Post(title="title1"), Post(title="title2", pub_date="2012-01-02")]
+    posts = Post.query.all()
     return render_template('posts.html', posts=posts, user=g.user)
 """
     form = MyForm()
