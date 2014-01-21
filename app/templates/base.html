@@ -51,12 +51,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="#">Project name</a>
+          <a class="brand" href="{{url_for('index')}}">Egida</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-                <li class="active"><a href="{{url_for('index')}}">Home</a></li>
-                <li><a href="{{url_for('posts')}}">Posts</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li><a href="{{url_for('posts')}}">Posts</a></li>
+	      <li><a href="{{url_for('new_post')}}">Add Post</a></li>
+              <li><a href="{{url_for('index')}}">Placeholder</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
