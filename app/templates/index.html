@@ -3,6 +3,7 @@
 
 <h1>Hello {{g.user.nickname}}</h1>
 <br><br>
+{% if g.user.role %}
 <h4>Type new post:</h4>
 <br>
 
@@ -24,5 +25,6 @@
     </p>
     <input type="submit" value="Send">
 </form>
+{% endif %}
 
 {% endblock content %}

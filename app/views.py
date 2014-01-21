@@ -4,6 +4,7 @@ from app import app, db, lm, oid
 #from forms import MyForm
 from forms import LoginForm, PostForm
 from flask.ext.login import login_user, logout_user, current_user, login_required
+from datetime import datetime
 
 
 @lm.user_loader(id)
@@ -22,19 +23,44 @@ def index():
     return render_template('starter-template.html')
 
 
-@app.route('/new_post')
+@app.route('/new_post', methods=['GET', 'POST'])
+#@login_required
 def new_post():
+    # for testing purposes only
+    g.user.role = 1
+
     form = PostForm()
+
+    if form.validate_on_submit():
+        post = Post(title=form.title.data, body=form.body.data,
+                    pub_date=datetime.utcnow(), user_id=g.user)
+        db.session.add(post)
+        db.session.commit()
+        flash('You have succesfuly added your post.')
+        return redirect(url_for('index'))
+
     return render_template('index.html', form=form)
 
 
 @app.route('/posts/')
+#@login_required
 def posts():
-    return render_template('posts.html')
+    posts = [Post(title="title1"), Post(title="title2", pub_date="2012-01-02")]
+    return render_template('posts.html', posts=posts)
 """
     form = MyForm()
     return render_template('posts.html', title='Posts', form=form)
 """
+
+
+@app.route('/posts/<post_id>')
+#@login_required
+def view_post(post_id):
+    #post = Post.query.filter_by(id=post_id).first()
+    #comments = Comment.query.filter_by(post_id=post_id)
+    #return render_template('view_post.html, post=post, comments=comments)
+    return
+
 
 
 @app.route('/login', methods=['GET', 'POST'])

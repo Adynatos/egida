@@ -1,6 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
 
-      <h1>Posts</h1>
+      <h1>Posts:</h1>
+      <br><br>
+
+      {% for post in posts %}
+      <p>
+      <h5>{{post.title}}</h5>
+      <br>
+      </p>
+      <p>Published: {{post.pub_date}}</p>
+      <br>
+      {% endfor %}
+
 
 {% endblock content %}
