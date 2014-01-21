@@ -2,29 +2,5 @@
 {% block content %}
 
 <h1>Hello {{g.user.nickname}}</h1>
-<br><br>
-{% if g.user.role %}
-<h4>Type new post:</h4>
-<br>
-
-<form action="" method="post" name="post">
-    {{form.hidden_tag()}}
-    <p>
-        Title:<br>
-        {{ form.title(size = 30, maxlength = 140)}}
-    </p>
-    <p>
-        Post:<br>
-        {{ form.body(size = 3000, maxlength = 14000) }}</td>
-    </p>
-            
-    <p>
-        {% for error in form.errors.post %}
-        <span style="color: red;">[{{error}}]</span><br>
-        {% endfor %}
-    </p>
-    <input type="submit" value="Send">
-</form>
-{% endif %}
 
 {% endblock content %}

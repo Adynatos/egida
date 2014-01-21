@@ -21,14 +21,15 @@ def before_request():
 @app.route('/index')
 @login_required
 def index():
-    return render_template('base.html')
+    user = g.user
+    return render_template('index.html', user=user)
 
 
 @app.route('/new_post', methods=['GET', 'POST'])
 #@login_required
 def new_post():
     # for testing purposes only
-    #g.user.role = 1
+    g.user.role = 1
 
     form = PostForm()
 
@@ -40,17 +41,17 @@ def new_post():
         flash('You have succesfuly added your post.')
         return redirect(url_for('index'))
 
-    return render_template('index.html', form=form)
+    return render_template('new_post.html', form=form, user=g.user)
 
 
 @app.route('/posts/')
 #@login_required
 def posts():
     posts = [Post(title="title1"), Post(title="title2", pub_date="2012-01-02")]
-    return render_template('posts.html', posts=posts)
+    return render_template('posts.html', posts=posts, user=g.user)
 """
     form = MyForm()
-    return render_template('posts.html', title='Posts', form=form)
+    return render_template('posts.html', title='Posts', form=form, user=g.user)
 """
 
 
