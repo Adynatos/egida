@@ -35,7 +35,7 @@ def new_post():
 
     if form.validate_on_submit():
         post = Post(title=form.title.data, body=form.body.data,
-                    pub_date=datetime.utcnow(), user_id=g.user)
+                    pub_date=datetime.utcnow(), user_id=g.user.id)
         db.session.add(post)
         db.session.commit()
         flash('You have succesfuly added your post.')
