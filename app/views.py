@@ -47,12 +47,8 @@ def new_post():
 @app.route('/posts/')
 #@login_required
 def posts():
-    posts = Post.query.all()
+    posts = Post.query.order_by(Post.pub_date.desc())
     return render_template('posts.html', posts=posts, user=g.user)
-"""
-    form = MyForm()
-    return render_template('posts.html', title='Posts', form=form, user=g.user)
-"""
 
 
 @app.route('/posts/<post_id>')
