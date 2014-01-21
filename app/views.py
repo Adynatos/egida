@@ -1,13 +1,13 @@
 from flask import render_template, url_for, redirect, session, g, request, flash
 from models import Post, User, ROLE_USER, ROLE_ADMIN
-from app import app, db, lm, oid
+from app import lm, app, db, oid
 #from forms import MyForm
 from forms import LoginForm, PostForm
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from datetime import datetime
 
 
-@lm.user_loader(id)
+@lm.user_loader
 def load_user(id):
     return User.query.get(int(id))
 
@@ -18,16 +18,17 @@ def before_request():
 
 
 @app.route('/')
+@app.route('/index')
 @login_required
 def index():
-    return render_template('starter-template.html')
+    return render_template('base.html')
 
 
 @app.route('/new_post', methods=['GET', 'POST'])
 #@login_required
 def new_post():
     # for testing purposes only
-    g.user.role = 1
+    #g.user.role = 1
 
     form = PostForm()
 
@@ -60,7 +61,6 @@ def view_post(post_id):
     #comments = Comment.query.filter_by(post_id=post_id)
     #return render_template('view_post.html, post=post, comments=comments)
     return
-
 
 
 @app.route('/login', methods=['GET', 'POST'])
