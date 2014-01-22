@@ -65,3 +65,5 @@ class Comment(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    user = db.relationship('User', 
+                            backref=db.backref('comments', lazy='dynamic')) 

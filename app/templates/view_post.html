@@ -7,7 +7,7 @@
 <br><br>
 
 {% for comment in comments %}
-<p>{{comment.pub_date}} {{comment.user_id}} says: <br>
+<p>{{comment.pub_date}} {{comment.user.nickname}} says: <br>
 {{ comment.body }} <br>
 {% endfor %}
 
