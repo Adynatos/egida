@@ -33,9 +33,8 @@ def new_post():
     form = PostForm()
 
     if form.validate_on_submit():
-        user = User.query.get(id = g.user.id)
         post = Post(title=form.title.data, body=form.body.data,
-                    pub_date=datetime.utcnow(), user_id=user.id, user=user)
+                    pub_date=datetime.utcnow(), user_id=g.user.id)
         db.session.add(post)
         db.session.commit()
         flash('You have succesfuly added your post.')
@@ -59,8 +58,9 @@ def view_post(post_id):
 
     form = CommentForm()
     if form.validate_on_submit():
+        user = User.query.get(g.user.id)
         comment = Comment(body=form.body.data, pub_date=datetime.utcnow(),
-                         user_id=g.user.id, post_id= post_id)
+                         user_id=g.user.id, post_id= post_id, user=user)
         db.session.add(comment)
         db.session.commit()
         flash('You have succesfully added your comment.')
