@@ -11,4 +11,20 @@
 {{ comment.body }} <br>
 {% endfor %}
 
+<p>Add comment:</p>
+
+<form action="/posts/{{ post.id }}" method="post" name="post">
+    {{form.hidden_tag()}}
+    <p>
+        {{ form.body(size = 200, maxlength = 400) }}</td>
+    </p>
+            
+    <p>
+        {% for error in form.errors.post %}
+        <span style="color: red;">[{{error}}]</span><br>
+        {% endfor %}
+    </p>
+    <input type="submit" value="Send">
+</form>
+
 {% endblock content %}

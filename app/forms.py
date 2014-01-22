@@ -14,4 +14,5 @@ class PostForm(Form):
     title = TextField('title', validators=[Required()])
     body = TextField('post', validators=[Required()])
 
-#MyForm = model_form(Post, Form)
+class CommentForm(Form):
+    body = TextField('comment', validators=[Required()])

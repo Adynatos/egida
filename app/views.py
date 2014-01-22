@@ -1,7 +1,7 @@
 from flask import render_template, url_for, redirect, session, g, request, flash
 from models import Post, User, Comment, ROLE_USER, ROLE_ADMIN
 from app import lm, app, db, oid
-from forms import LoginForm, PostForm
+from forms import LoginForm, PostForm, CommentForm
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from datetime import datetime
 
@@ -50,13 +50,23 @@ def posts():
     return render_template('posts.html', posts=posts, user=g.user)
 
 
-@app.route('/posts/<post_id>')
+@app.route('/posts/<post_id>', methods=['GET', 'POST'])
 @login_required
 def view_post(post_id):
     post = Post.query.filter_by(id=post_id).first()
-    comments = Comment.query.filter_by(post_id=post_id)
-    return render_template('view_post.html', post=post, comments=comments)
-    #return
+    comments = Comment.query.filter_by(post_id=post_id).order_by(Comment.pub_date.asc())
+
+    form = CommentForm()
+    if form.validate_on_submit():
+        comment = Comment(body=form.body.data, pub_date=datetime.utcnow(),
+                         user_id=g.user.id, post_id= post_id)
+        db.session.add(comment)
+        db.session.commit()
+        flash('You have succesfully added your comment.')
+        return redirect(url_for('view_post', post_id=post_id))
+
+    return render_template('view_post.html', post=post,
+                            comments=comments, form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
