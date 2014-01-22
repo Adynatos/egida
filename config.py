@@ -10,6 +10,9 @@ USERNAME = 'admin'
 PASSWORD = 'default'
 SQLALCHEMY_DATABASE_URI = 'sqlite:///' \
                           + os.path.join(basedir, 'app.db')
+WHOOSH_BASE = os.path.join(basedir, 'search.db')
+MAX_SEARCH_RESULTS = 50
+
 OPENID_PROVIDERS = [
     {'name': 'Google', 'url': 'https://www.google.com/accounts/o8/id'},
     {'name': 'Yahoo', 'url': 'https://me.yahoo.com'},

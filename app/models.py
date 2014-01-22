@@ -1,4 +1,7 @@
 from app import db
+from app import app
+import flask.ext.whooshalchemy as whooshalchemy
+
 
 ROLE_USER = 0
 ROLE_ADMIN = 1
@@ -42,8 +45,19 @@ class Category(db.Model):
     def __repr__(self):
         return '<Category %r>' % self.name
 
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.Text)
+    pub_date = db.Column(db.DateTime)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    user = db.relationship('User', 
+                            backref=db.backref('comments', lazy='dynamic')) 
 
 class Post(db.Model):
+    __searchable__ = ['body']
+
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80))
     body = db.Column(db.Text)
@@ -57,13 +71,7 @@ class Post(db.Model):
     def __repr__(self):
         return '<Post %r>' % self.title
 
+whooshalchemy.whoosh_index(app, Post)
 
-class Comment(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.Text)
-    pub_date = db.Column(db.DateTime)
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
-    user = db.relationship('User', 
-                            backref=db.backref('comments', lazy='dynamic')) 
+

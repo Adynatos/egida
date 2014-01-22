@@ -1,9 +1,10 @@
 from flask import render_template, url_for, redirect, session, g, request, flash
 from models import Post, User, Comment, ROLE_USER, ROLE_ADMIN
 from app import lm, app, db, oid
-from forms import LoginForm, PostForm, CommentForm
+from forms import LoginForm, PostForm, CommentForm, SearchingForm
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from datetime import datetime
+from config import MAX_SEARCH_RESULTS
 
 
 @lm.user_loader
@@ -14,6 +15,7 @@ def load_user(id):
 @app.before_request
 def before_request():
     g.user = current_user
+    g.searching_form = SearchingForm()
 
 
 @app.route('/')
@@ -69,6 +71,18 @@ def view_post(post_id):
     return render_template('view_post.html', post=post,
                             comments=comments, form=form)
 
+@app.route('/search', methods=['POST'])
+@login_required
+def search():
+    if not g.searching_form.validate_on_submit():
+        return redirect(url_for('index'))
+    return redirect(url_for('search_results', query=g.searching_form.search.data))
+
+@app.route('/search_results/<query>')
+@login_required
+def search_results(query):
+    results = Post.query.whoosh_search(query, MAX_SEARCH_RESULTS).all()
+    return render_template('search_results.html', query=query, results=results)
 
 @app.route('/login', methods=['GET', 'POST'])
 @oid.loginhandler

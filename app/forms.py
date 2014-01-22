@@ -16,3 +16,6 @@ class PostForm(Form):
 
 class CommentForm(Form):
     body = TextField('comment', validators=[Required()])
+
+class SearchingForm(Form):
+    search = TextField('search', validators=[Required()])
