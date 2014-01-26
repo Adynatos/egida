@@ -1,11 +1,21 @@
 from flask import render_template, url_for, redirect, session, g, request, flash
-from models import Post, User, Comment, ROLE_USER, ROLE_ADMIN
+from models import Post, User, Comment, Tag, ROLE_USER, ROLE_ADMIN
 from app import lm, app, db, oid
 from forms import LoginForm, PostForm, CommentForm, SearchingForm
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from datetime import datetime
 from config import MAX_SEARCH_RESULTS
 
+def get_or_create_tag(tag):
+    t = Tag.query.filter_by(name=tag)
+    if t.count() == 0:
+        t = Tag(name=tag)
+        db.session.add(t)
+        db.session.commit()
+    else:
+        t = t.first()
+
+    return t
 
 @lm.user_loader
 def load_user(id):
@@ -23,20 +33,23 @@ def before_request():
 @login_required
 def index():
     user = g.user
-    return render_template('index.html', user=user)
+    tags = Tag.query.all()
+    return render_template('index.html', user=user, tags=tags)
 
 
 @app.route('/new_post', methods=['GET', 'POST'])
-#@login_required
+@login_required
 def new_post():
-    # for testing purposes only
-    g.user.role = 1
-
     form = PostForm()
 
     if form.validate_on_submit():
-        post = Post(title=form.title.data, body=form.body.data,
-                    pub_date=datetime.utcnow(), user_id=g.user.id)
+        post = Post(title=form.title.data, body=form.body.data, 
+                pub_date=datetime.utcnow(), user_id=g.user.id)
+
+        for tag in form.tags.data.split():
+            tag = get_or_create_tag(tag)
+            post.tags.append(tag)
+
         db.session.add(post)
         db.session.commit()
         flash('You have succesfuly added your post.')
@@ -71,6 +84,14 @@ def view_post(post_id):
     return render_template('view_post.html', post=post,
                             comments=comments, form=form)
 
+@app.route('/tags/<tag_name>')
+@login_required
+def posts_with_tag(tag_name):
+    tag = Tag.query.filter_by(name=tag_name).first_or_404()
+    posts = tag.posts.all()
+    return render_template('posts.html', posts=posts, user=g.user)
+
+
 @app.route('/search', methods=['POST'])
 @login_required
 def search():
@@ -78,11 +99,13 @@ def search():
         return redirect(url_for('index'))
     return redirect(url_for('search_results', query=g.searching_form.search.data))
 
+
 @app.route('/search_results/<query>')
 @login_required
 def search_results(query):
     results = Post.query.whoosh_search(query, MAX_SEARCH_RESULTS).all()
     return render_template('search_results.html', query=query, results=results)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 @oid.loginhandler

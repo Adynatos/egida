@@ -13,6 +13,7 @@ class LoginForm(Form):
 class PostForm(Form):
     title = TextField('title', validators=[Required()])
     body = TextField('post', validators=[Required()])
+    tags = TextField('tags', validators=[Required()])
 
 class CommentForm(Form):
     body = TextField('comment', validators=[Required()])
