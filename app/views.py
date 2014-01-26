@@ -38,9 +38,6 @@ def index():
 
 
 @app.route('/new_post', methods=['GET', 'POST'])
-@login_required
-def new_post():
-    form = PostForm()
 
     if form.validate_on_submit():
         post = Post(title=form.title.data, body=form.body.data, 
@@ -68,7 +65,7 @@ def posts():
 @app.route('/posts/<post_id>', methods=['GET', 'POST'])
 @login_required
 def view_post(post_id):
-    post = Post.query.filter_by(id=post_id).first()
+    post = Post.query.filter_by(id=post_id).first_or_404()
     comments = Comment.query.filter_by(post_id=post_id).order_by(Comment.pub_date.asc())
 
     form = CommentForm()
