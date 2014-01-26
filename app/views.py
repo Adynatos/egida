@@ -38,7 +38,10 @@ def index():
 
 
 @app.route('/new_post', methods=['GET', 'POST'])
+@login_required
+def new_post():
 
+    form = PostForm()
     if form.validate_on_submit():
         post = Post(title=form.title.data, body=form.body.data, 
                 pub_date=datetime.utcnow(), user_id=g.user.id)
