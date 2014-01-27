@@ -21,7 +21,7 @@ and run it. You can pass following arguments:
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.script import Manager, Command
-from flask.ext.migrate import MigrateCommand 
+from flask.ext.migrate import MigrateCommand
 from app import app, db, migrate, models
 
 
