@@ -1,3 +1,18 @@
+"""
+Configuration file
+
+A collection of constans which define application settings:
+
+DATABASE - location of database file.
+DEBUG - debug mode
+CSRF_ENABLED - cross site request forgery protection
+SECRET_KEY - used to create cryptographic token, that is used to validate a
+form.
+SQLALCHEMY_DATABASE_URI - path to the database file
+WHOOSH_BASE - path to
+MAX_SEARCH_RESULTS - maximum number of viewed search results
+OPENID_PROVIDERS - list of OpenID providers which can be used to log in
+"""
 import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
