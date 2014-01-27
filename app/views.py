@@ -1,3 +1,5 @@
+"""This module contains functions with handle http request for given url"""
+
 from flask import render_template, url_for, redirect, session, g, request, flash
 from models import Post, User, Comment, Tag, ROLE_USER, ROLE_ADMIN
 from app import lm, app, db, oid
@@ -19,11 +21,14 @@ def get_or_create_tag(tag):
 
 @lm.user_loader
 def load_user(id):
+    """Returns User object for the given id"""
     return User.query.get(int(id))
 
 
 @app.before_request
 def before_request():
+    """Adds object representing current user, and form for searching to the
+    state, before processing request"""
     g.user = current_user
     g.searching_form = SearchingForm()
 
@@ -32,6 +37,8 @@ def before_request():
 @app.route('/index')
 @login_required
 def index():
+    """Renders index.html template for the logged user with current tags.
+    Require user to be logged in"""
     user = g.user
     tags = Tag.query.all()
     return render_template('index.html', user=user, tags=tags)
@@ -40,6 +47,9 @@ def index():
 @app.route('/new_post', methods=['GET', 'POST'])
 @login_required
 def new_post():
+    """Create and handle form for  adding posts,
+    Renders template for adding new post.
+    Accept both POST and GET request"""
 
     form = PostForm()
     if form.validate_on_submit():
