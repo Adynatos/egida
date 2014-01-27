@@ -1,3 +1,9 @@
+"""
+Models
+
+Collection of classes that represents the SQL tables structure.
+"""
+
 from app import db
 from app import app
 import flask.ext.whooshalchemy as whooshalchemy
@@ -8,15 +14,18 @@ ROLE_ADMIN = 1
 
 
 class User(db.Model):
+    """
+    Model that represents user.
+
+    Functions is_authenticated, is_active, is_anonymous and get_id are used by
+    OpenID.
+    """
     id = db.Column(db.Integer, primary_key=True)
-    nickname = db.Column(db.String(64), index=True, \
-                         unique=True)
-    email = db.Column(db.String(120), index=True, \
-                      unique=True)
+    nickname = db.Column(db.String(64), index=True, unique=True)
+    email = db.Column(db.String(120), index=True, unique=True)
     role = db.Column(db.SmallInteger, default=ROLE_USER)
 
-    posts = db.relationship('Post', backref='author', \
-                            lazy='dynamic')
+    posts = db.relationship('Post', backref='author', lazy='dynamic')
 
     # next 4 functions are needed by OpenID
     def is_authenticated(self):
@@ -36,35 +45,50 @@ class User(db.Model):
 
 
 class Category(db.Model):
+    """
+    Model that represents Category.
+    """
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
 
-    posts = db.relationship('Post', backref='category', \
-                            lazy='dynamic')
+    posts = db.relationship('Post', backref='category', lazy='dynamic')
 
     def __repr__(self):
         return '<Category %r>' % self.name
 
+
 class Comment(db.Model):
+    """
+    Model that represents comment.
+    """
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.Text)
     pub_date = db.Column(db.DateTime)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
-    user = db.relationship('User', 
-                            backref=db.backref('comments', lazy='dynamic')) 
+    user = db.relationship('User',
+                           backref=db.backref('comments', lazy='dynamic'))
 
 tags = db.Table('tags',
-        db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
-        db.Column('post_id', db.Integer, db.ForeignKey('post.id'))
-        )
+                db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
+                db.Column('post_id', db.Integer, db.ForeignKey('post.id'))
+                )
+
 
 class Tag(db.Model):
+    """
+    Model that represents tag.
+    """
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
 
+
 class Post(db.Model):
+    """
+    Model that represents post.
+    """
     __searchable__ = ['body']
 
     id = db.Column(db.Integer, primary_key=True)
@@ -73,17 +97,13 @@ class Post(db.Model):
     pub_date = db.Column(db.DateTime)
 
     tags = db.relationship('Tag', secondary=tags,
-            backref=db.backref('posts', lazy='dynamic'))
+                           backref=db.backref('posts', lazy='dynamic'))
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    category_id = db.Column(db.Integer, \
-                            db.ForeignKey('category.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
     comments = db.relationship('Comment', backref='post', lazy='dynamic')
 
     def __repr__(self):
         return '<Post %r>' % self.title
 
 whooshalchemy.whoosh_index(app, Post)
-
-
-
