@@ -1,0 +1,35 @@
+Podręcznik użytkownika
+
+1. Instalacja
+
+1) Przygotowanie wirtualnego środowiska
+
+Uruchamiamy skrypt install_virtualen.sh:
+./install_virtualenv.sh
+
+Należy zwrócić uwagę na to, aby alias "python" odnosił się do interpretera
+python w wersji 2. Wymagane jest również połączenie z internetem.
+
+2) Konfiguracja bazy danych
+
+Aby utworzyć nową bazę danych, należy wywołać komendę:
+./manager.py create_db
+(należy zwrócić szczególną uwagę, aby manager.py NIE był uruchamiany za pomocą
+python manager.py)
+
+Następnie należy utworzyć pierwotną wersję bazy danych oraz miejsca na migracje
+przyszłych wersji bazy danych:
+./manager db init
+
+
+3) Uruchamianie serwera
+
+Uruchamianie serwera odbywa się za pomocą komendy:
+./manager.py runserver
+
+
+2. Konfiguracja
+
+Aplikację możemy konfigurować za pośrednictwem pliku config.py.
+Możemy zmienić ścieżkę bazy danych, włączyć/wyłączyć tryb debugowania,
+włączyć/wyłączyć ochronę przed atakami typu CRSF, zmienić 
