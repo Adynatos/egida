@@ -148,8 +148,7 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a href="app.views-module.html#new_post" class="summary-sig-name">new_post</a>()</span><br />
-      Create and handle form for  adding posts, Renders template for adding
-      new post.</td>
+      Create and handle form for adding posts.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="app.views-pysrc.html#new_post">source&nbsp;code</a></span>
             
@@ -165,7 +164,9 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="app.views-module.html#posts" class="summary-sig-name">posts</a>()</span></td>
+          <td><span class="summary-sig"><a href="app.views-module.html#posts" class="summary-sig-name">posts</a>()</span><br />
+      Query the database for post, ordered descending by publication date, 
+      then render template to display them</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="app.views-pysrc.html#posts">source&nbsp;code</a></span>
             
@@ -181,7 +182,9 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="app.views-module.html#view_post" class="summary-sig-name">view_post</a>(<span class="summary-sig-arg">post_id</span>)</span></td>
+          <td><span class="summary-sig"><a href="app.views-module.html#view_post" class="summary-sig-name">view_post</a>(<span class="summary-sig-arg">post_id</span>)</span><br />
+      Displays post page for post with given id or 404 error if post with 
+      that id doesn't exist.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="app.views-pysrc.html#view_post">source&nbsp;code</a></span>
             
@@ -197,7 +200,8 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="app.views-module.html#posts_with_tag" class="summary-sig-name">posts_with_tag</a>(<span class="summary-sig-arg">tag_name</span>)</span></td>
+          <td><span class="summary-sig"><a href="app.views-module.html#posts_with_tag" class="summary-sig-name">posts_with_tag</a>(<span class="summary-sig-arg">tag_name</span>)</span><br />
+      Displays all posts with given tag, or 404 error if tag doesn't exist</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="app.views-pysrc.html#posts_with_tag">source&nbsp;code</a></span>
             
@@ -213,7 +217,8 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="app.views-module.html#search" class="summary-sig-name">search</a>()</span></td>
+          <td><span class="summary-sig"><a href="app.views-module.html#search" class="summary-sig-name">search</a>()</span><br />
+      Handler for search request.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="app.views-pysrc.html#search">source&nbsp;code</a></span>
             
@@ -229,7 +234,8 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="app.views-module.html#search_results" class="summary-sig-name">search_results</a>(<span class="summary-sig-arg">query</span>)</span></td>
+          <td><span class="summary-sig"><a href="app.views-module.html#search_results" class="summary-sig-name">search_results</a>(<span class="summary-sig-arg">query</span>)</span><br />
+      Displays search results for the given query.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="app.views-pysrc.html#search_results">source&nbsp;code</a></span>
             
@@ -245,7 +251,8 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="app.views-module.html#login" class="summary-sig-name">login</a>()</span></td>
+          <td><span class="summary-sig"><a href="app.views-module.html#login" class="summary-sig-name">login</a>()</span><br />
+      Login function create and validate LoginForm.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="app.views-pysrc.html#login">source&nbsp;code</a></span>
             
@@ -261,7 +268,8 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="app.views-module.html#logout" class="summary-sig-name">logout</a>()</span></td>
+          <td><span class="summary-sig"><a href="app.views-module.html#logout" class="summary-sig-name">logout</a>()</span><br />
+      Deauthenticate current user</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="app.views-pysrc.html#logout">source&nbsp;code</a></span>
             
@@ -277,7 +285,9 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a href="app.views-module.html#after_login" class="summary-sig-name">after_login</a>(<span class="summary-sig-arg">resp</span>)</span></td>
+          <td><span class="summary-sig"><a href="app.views-module.html#after_login" class="summary-sig-name">after_login</a>(<span class="summary-sig-arg">resp</span>)</span><br />
+      Function runs after succesful login If user logs in for the first 
+      time he is added to the database.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="app.views-pysrc.html#after_login">source&nbsp;code</a></span>
             
@@ -393,8 +403,9 @@
     </td>
   </tr></table>
   
-  <p>Create and handle form for  adding posts, Renders template for adding 
-  new post. Accept both POST and GET request</p>
+  <p>Create and handle form for adding posts. If form validate adds data to
+  database. Renders template for adding new post. Accept both POST and GET 
+  request</p>
   <dl class="fields">
     <dt>Decorators:</dt>
     <dd><ul class="nomargin-top">
@@ -418,7 +429,8 @@
     </td>
   </tr></table>
   
-  
+  <p>Query the database for post, ordered descending by publication date, 
+  then render template to display them</p>
   <dl class="fields">
     <dt>Decorators:</dt>
     <dd><ul class="nomargin-top">
@@ -441,7 +453,9 @@
     </td>
   </tr></table>
   
-  
+  <p>Displays post page for post with given id or 404 error if post with 
+  that id doesn't exist. Also handle adding comments (generate form, 
+  validate data and update database)</p>
   <dl class="fields">
     <dt>Decorators:</dt>
     <dd><ul class="nomargin-top">
@@ -465,7 +479,8 @@
     </td>
   </tr></table>
   
-  
+  <p>Displays all posts with given tag, or 404 error if tag doesn't 
+  exist</p>
   <dl class="fields">
     <dt>Decorators:</dt>
     <dd><ul class="nomargin-top">
@@ -489,7 +504,7 @@
     </td>
   </tr></table>
   
-  
+  <p>Handler for search request. Redirects to page with search results</p>
   <dl class="fields">
     <dt>Decorators:</dt>
     <dd><ul class="nomargin-top">
@@ -513,7 +528,8 @@
     </td>
   </tr></table>
   
-  
+  <p>Displays search results for the given query. Search all posts' body 
+  and display up to MAX_SEARCH_RESULTS results</p>
   <dl class="fields">
     <dt>Decorators:</dt>
     <dd><ul class="nomargin-top">
@@ -537,7 +553,8 @@
     </td>
   </tr></table>
   
-  
+  <p>Login function create and validate LoginForm. Uses openid for 
+  authentication.</p>
   <dl class="fields">
     <dt>Decorators:</dt>
     <dd><ul class="nomargin-top">
@@ -561,7 +578,7 @@
     </td>
   </tr></table>
   
-  
+  <p>Deauthenticate current user</p>
   <dl class="fields">
     <dt>Decorators:</dt>
     <dd><ul class="nomargin-top">
@@ -584,7 +601,9 @@
     </td>
   </tr></table>
   
-  
+  <p>Function runs after succesful login If user logs in for the first time
+  he is added to the database. If remember_me field is set true then it 
+  sets proper cookies for user's session</p>
   <dl class="fields">
     <dt>Decorators:</dt>
     <dd><ul class="nomargin-top">
@@ -617,7 +636,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Tue Jan 28 00:47:24 2014
+    Generated by Epydoc 3.0.1 on Tue Jan 28 01:56:42 2014
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
