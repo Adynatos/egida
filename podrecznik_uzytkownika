@@ -7,7 +7,7 @@ Podręcznik użytkownika
 Uruchamiamy skrypt install_virtualen.sh:
 $ ./install_virtualenv.sh
 
-Należy zwrócić uwagę na to, aby alias "python" odnosił się do interpretera
+Należy zwrócić uwagę na to, aby alias "python" używanej powłoki (shell) odnosił się do interpretera
 python w wersji 2. Wymagane jest również połączenie z internetem.
 
 2) Konfiguracja bazy danych
@@ -28,6 +28,8 @@ $ ./manager db upgrade
 
 Uruchamianie serwera odbywa się za pomocą komendy:
 $ ./manager.py runserver
+
+Serwer jest dostępny pod adresem http://127.0.0.1:5000
 
 
 2. Konfiguracja
@@ -57,10 +59,11 @@ Importujemy model użytkownika:
 Importujemy bazę danych:
 >>> from app import db
 
-Tworzymy obiekt typu User:
->>> u = User.query.filter(User.email=="jan.kubasny@example.com").first()
+Wyszukujemy użytkownika w bazie danych:
+>>> u = User.query.filter(User.email=="jan.kowalski@example.com").first()
 
 
+Commitujemy nasze zmiany do bazy danych:
 >>> db.session.add(u)
 >>> db.session.commit()
 
