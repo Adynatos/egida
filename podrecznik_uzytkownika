@@ -21,6 +21,8 @@ Następnie należy utworzyć pierwotną wersję bazy danych oraz miejsca na migr
 przyszłych wersji bazy danych:
 ./manager db init
 
+Potem należy wykonać update bazy danych:
+./manager db upgrade
 
 3) Uruchamianie serwera
 
@@ -32,4 +34,32 @@ Uruchamianie serwera odbywa się za pomocą komendy:
 
 Aplikację możemy konfigurować za pośrednictwem pliku config.py.
 Możemy zmienić ścieżkę bazy danych, włączyć/wyłączyć tryb debugowania,
-włączyć/wyłączyć ochronę przed atakami typu CRSF, zmienić 
+włączyć/wyłączyć ochronę przed atakami typu CRSF, zmienić klucz do generowania
+podpisów kryptograficznych chroniących przed atakami CRSF, itp. Dokładny opis
+pliku config.py z objaśnieniem do czego służą konkretne stałe znajduje się w
+dokumentacji aplikacji.
+
+
+WAŻNE:
+
+Przy pierwszym logowaniu danego użytkowanika zostanie utworzone konto w bazie danych. Będzie ono
+identyfikowane adres e-mail. Ze względów bezpieczeństwa nowo dodane konta mają
+rolę użytkownika. Aby umożliwić użytkownikowi danego konta dodawanie oraz
+modyfikację postów należy zwiększyć uprawnienia danego konta z poziomu
+użytkownika do poziomu administratora:
+
+Uruchamiamy interpreter pythona:
+./manager.py shell
+
+Importujemy model użytkownika:
+>>> from app.models import User
+
+Importujemy bazę danych:
+>>> from app import db
+
+Tworzymy obiekt typu User:
+>>> u = User.query.filter(email="jan.kowalski@example.com")
+
+>>> db.session.add(u)
+>>> db.session.commit()
+
