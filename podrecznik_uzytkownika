@@ -5,7 +5,7 @@ Podręcznik użytkownika
 1) Przygotowanie wirtualnego środowiska
 
 Uruchamiamy skrypt install_virtualen.sh:
-./install_virtualenv.sh
+$ ./install_virtualenv.sh
 
 Należy zwrócić uwagę na to, aby alias "python" odnosił się do interpretera
 python w wersji 2. Wymagane jest również połączenie z internetem.
@@ -13,7 +13,7 @@ python w wersji 2. Wymagane jest również połączenie z internetem.
 2) Konfiguracja bazy danych
 
 Aby utworzyć nową bazę danych, należy wywołać komendę:
-./manager.py create_db
+$ ./manager.py create_db
 (należy zwrócić szczególną uwagę, aby manager.py NIE był uruchamiany za pomocą
 python manager.py)
 
@@ -22,12 +22,12 @@ przyszłych wersji bazy danych:
 ./manager db init
 
 Potem należy wykonać update bazy danych:
-./manager db upgrade
+$ ./manager db upgrade
 
 3) Uruchamianie serwera
 
 Uruchamianie serwera odbywa się za pomocą komendy:
-./manager.py runserver
+$ ./manager.py runserver
 
 
 2. Konfiguracja
@@ -49,7 +49,7 @@ modyfikację postów należy zwiększyć uprawnienia danego konta z poziomu
 użytkownika do poziomu administratora:
 
 Uruchamiamy interpreter pythona:
-./manager.py shell
+$ ./manager.py shell
 
 Importujemy model użytkownika:
 >>> from app.models import User
@@ -58,7 +58,8 @@ Importujemy bazę danych:
 >>> from app import db
 
 Tworzymy obiekt typu User:
->>> u = User.query.filter(email="jan.kowalski@example.com")
+>>> u = User.query.filter(User.email=="jan.kubasny@example.com").first()
+
 
 >>> db.session.add(u)
 >>> db.session.commit()
