@@ -33,7 +33,7 @@ Views:
 @client
 /my_order
     room ( link to /room/<room_id>), room_rental->date_start,
-    room_rental->date_end, room_rental->features, bill->cost, bill->is_paid
+    room_rental->date_end, room_rental->features, order->cost, order->is_paid
 
 @admin
 /all_rooms
@@ -46,6 +46,7 @@ Views:
 
 @admin
 /reserved_rooms
+    List ( all rooms that have: state==reserved )
 
 @admin
 /all_employees
