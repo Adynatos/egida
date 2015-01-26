@@ -1,13 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
 
-      <h1>Avaliable rooms:</h1>
+      <h1>Rooms:</h1>
       <br><br>
 
       {% for room in rooms %}
-      <p>
-      {{room.type}}, {{room.price}}, {{room.floor}}, {{room.number}}, 
-      <a href={{ url_for('view_room', room_id=room.id) }}>{{link to room}}</a>
+      <p>Room number: {{room.number}}</p>
+      <p>Floor: {{room.floor}}</p>
+      <p>Room type: {{room.room_type}}</p>
+      <p>Price per day: {{room.price_per_day}}</p>
+      {# <!-- <a href={{ url_for('view_room', room_id=room.id) }}>{{link to room}}</a> --> #}
+      <a href={{ url_for('view_room', room_id=room.id) }}>link to room</a>
       </p>
       <br>
       {% endfor %}

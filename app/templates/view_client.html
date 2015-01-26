@@ -8,4 +8,11 @@
 <p>Age: {{client.age}}</p>
 <p>Married: {{client.is_married}}</p>
 
+<h5>Client's orders:</h5>
+{% for order in orders %}
+<a href={{ url_for('view_order',order_id=order.id) }}>Link to order</a>
+<br>
+{% endfor %}
+
+
 {% endblock content %}

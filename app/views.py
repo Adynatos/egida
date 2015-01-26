@@ -9,6 +9,56 @@ from datetime import datetime
 from config import MAX_SEARCH_RESULTS
 
 
+@app.route('/all_rooms')
+def all_rooms():
+    rooms = Room.query.all()
+    return render_template('list_rooms.html', rooms=rooms)
+
+@app.route('/avaliable_rooms')
+def avaliable_rooms():
+    rooms = Room.query.filter_by(room_state=Room_state.query.filter_by(state_name='avaliable').first())
+    return render_template('list_rooms.html', rooms=rooms)
+
+@app.route('/reserved_rooms')
+def reserved_rooms():
+    rooms = Room.query.filter_by(room_state=Room_state.query.filter_by(state_name='reserved').first())
+    return render_template('list_rooms.html', rooms=rooms)
+
+@app.route('/rented_rooms')
+def rented_rooms():
+    rooms = Room.query.filter_by(room_state=Room_state.query.filter_by(state_name='rented').first())
+    return render_template('list_rooms.html', rooms=rooms)
+
+@app.route('/all_employees')
+def all_employees():
+    emps = Employee.query.all()
+    return render_template('all_employees.html', employees=emps)
+
+@app.route('/employess_by_role')
+def employess_by_role():
+    roles = Role.query.all()
+    for role in roles:
+        role.quantity = len(Employee.query.filter_by(role=role))
+    return render_template('employees_by_role.html', roles=roles)
+
+@app.route('/room/<room_id>')
+def view_room(room_id):
+    room = Room.query.filter_by(id=room_id).first()
+    return render_template('view_room.html', room=room)
+
+@app.route('/order/<order_id>')
+def view_order(order_id):
+    order = Order.query.filter_by(id=order_id).first()
+    return render_template('view_order.html', order=order,
+                           client=order.client,
+                           room_rental=order.room_rental)
+
+@app.route('/client/<client_id>')
+def view_client(client_id):
+    client = Client.query.filter_by(id=client_id).first()
+    orders = Order.query.filter_byt(client=client)
+    return render_template('view_client.html', client=client, orders=orders)
+
 @app.route('/new_room', methods=['GET', 'POST'])
 def new_room():
     form = RoomForm()

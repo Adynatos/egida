@@ -63,6 +63,7 @@ class Ordered_features(db.Model):
 class Order(db.Model):
     __tablename__ = 'order'
     id = db.Column(db.Integer, primary_key=True)
+    #TODO: zamiast room mialo byc room_rental
     room = db.relationship("Room", backref="orders")
     room_id = db.Column(db.Integer, db.ForeignKey('room.id'))
     client = db.relationship("Client", backref="orders")

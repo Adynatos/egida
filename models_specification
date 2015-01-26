@@ -3,7 +3,7 @@ room: id, number, floor, type (for 2,3,4 ppl), price_per_day, state
 room_state_type: ( id, room_state_name )
 -rented
 -reserved
--ready_for_rent
+-avaliable
 -need_cleaning
 -need_repair
 
