@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+
+/order/<order_id>
+    order: room_rental_id, client_id ( link /client/<client_id> ), cost, is_paid
+    room_rental: room_rental_id->date_start, room_rental_id->date_end, room_id ( linkt /room/<room_id> )
+    Features: list of ordered features
+
+<p><a href={{ url_for('view_client', client_id=client.id) }}>{{client.name}} {{client.surname}}</a><p>
+<p><a href={{ url_for('view_room', room_id=room.id) }}>{{Link to room description}}</a><p>
+<p>Room rented from: {{ room_rental.date_start }}</p>
+<p>Room rented until: {{ room_rental.date_end }}</p>
+<p>Features:<br>
+{% for feature in features %}
+{{ feature.name }}<br>
+{% endfor %}
+</p>
+<p>Total cost: {{order.cost}}</p>
+<p>Already paid: {{order.is_paid}}</p>
+
+{% endblock content %}
