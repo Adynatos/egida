@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% for e in employess %}
+<p>{{e.name}}, {{e.surname}}, {{e.phone}}, {{e.email}}, {{e.sex}}, {{e.age}}, {{e.role}}, {{e.salary}}</p>
+{% endfor %}
+
+{% endblock content %}

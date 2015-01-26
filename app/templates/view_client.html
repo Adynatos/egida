@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>{{client.name}} {{client.surname}}</h3>
+<p>Phone: {{client.phone}}</p>
+<p>E-mail: {{client.email}}</p>
+<p>Sex: {{client.sex}}</p>
+<p>Age: {{client.age}}</p>
+<p>Married: {{client.is_married}}</p>
+
+{% endblock content %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+
+      <h1>Avaliable rooms:</h1>
+      <br><br>
+
+      {% for room in rooms %}
+      <p>
+      {{room.type}}, {{room.price}}, {{room.floor}}, {{room.number}}, 
+      <a href={{ url_for('view_room', room_id=room.id) }}>{{link to room}}</a>
+      </p>
+      <br>
+      {% endfor %}
+
+
+{% endblock content %}

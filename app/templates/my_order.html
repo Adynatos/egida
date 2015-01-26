@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p><a href={{ url_for('view_room', room_id=room.id) }}>{{link to your room description}}</a><p>
+<p>Room rented from: {{ room_rental.date_start }}</p>
+<p>Room rented until: {{ room_rental.date_end }}</p>
+<p>Features:<br>
+{% for feature in features %}
+{{ feature.name }}<br>
+{% endfor %}
+</p>
+<p>Total cost: {{order.cost}}</p>
+<p>Already paid: {{order.is_paid}}</p>
+
+{% endblock content %}

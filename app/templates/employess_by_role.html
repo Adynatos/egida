@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% for role in roles %}
+<p>{{r.name}}, {{r.quantity}}, {{r.job_grade}}</p>
+{% endfor %}
+
+{% endblock content %}
