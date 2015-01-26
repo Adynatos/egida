@@ -10,72 +10,99 @@ import flask.ext.whooshalchemy as whooshalchemy
 
 
 class Room(db.Model):
+    __tablename__ = 'room'
     id = db.Column(db.Integer, primary_key=True)
     number = db.Column(db.Integer)
     floor = db.Column(db.Integer)
-    room_type_id = (db.Integer, db.ForeignKey('room_type.id'))
+    room_type = db.relationship("Room_type", backref="rooms")
+    room_type_id = db.Column(db.Integer, db.ForeignKey('room_type.id'))
     price_per_day = db.Column(db.Integer)
-    room_state_id = (db.Integer, db.ForeignKey('room_state.id'))
+    room_state = db.relationship("Room_state", backref="rooms")
+    room_state_id = db.Column(db.Integer, db.ForeignKey('room_state.id'))
 
 class Room_state(db.Model):
+    __tablename__ = 'room_state'
     id = db.Column(db.Integer, primary_key=True)
     state_name = db.Column(db.String(120))
 
 class Room_type(db.Model):
+    __tablename__ = 'room_type'
     id = db.Column(db.Integer, primary_key=True)
     r_type = db.Column(db.SmallInteger)
 
 class Room_rental(db.Model):
+    __tablename__ = 'room_rental'
     id = db.Column(db.Integer, primary_key=True)
-    room_id = (db.Integer, db.ForeignKey('Room.id'))
-    client_id = (db.Integer, db.ForeignKey('client.id'))
-    ordered_features_id = (db.Integer, db.ForeignKey('ordered_features.id'))
+    room = db.relationship("Room", backref="rentals")
+    room_id = db.Column(db.Integer, db.ForeignKey('room.id'))
+    client = db.relationship("Client", backref="rented")
+    client_id = db.Column(db.Integer, db.ForeignKey('client.id'))
+    ordered_features = db.relationship("Ordered_features", backref="rentals")
+    ordered_features_id = db.Column(db.Integer, db.ForeignKey('ordered_features.id'))
     date_start = db.Column(db.Date)
     date_end = db.Column(db.Date)
 
 class Extra_features(db.Model):
+    __tablename__ = 'extra_features'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60))
     price = db.Column(db.Integer)
 
+association_table = db.Table('order__features_asso',
+            db.Column('ordered_id', db.Integer, db.ForeignKey('ordered_features.id')),
+            db.Column('feature_id', db.Integer, db.ForeignKey('extra_features.id'))
+                )
+
 class Ordered_features(db.Model):
+    __tablename__ = 'ordered_features'
     id = db.Column(db.Integer, primary_key=True)
-    room_id = (db.Integer, db.ForeignKey('room.id'))
-    features = (db.Integer, db.ForeignKey('extra_features.id'))
+    features = db.relationship("Extra_features", 
+            secondary=association_table,
+            backref="ordered")
 
 class Order(db.Model):
+    __tablename__ = 'order'
     id = db.Column(db.Integer, primary_key=True)
-    room_id = (db.Integer, db.ForeignKey('room.id'))
-    client_id = (db.Integer, db.ForeignKey('client.id'))
+    room = db.relationship("Room", backref="orders")
+    room_id = db.Column(db.Integer, db.ForeignKey('room.id'))
+    client = db.relationship("Client", backref="orders")
+    client_id = db.Column(db.Integer, db.ForeignKey('client.id'))
     cost = db.Column(db.Integer)
     is_paid = db.Column(db.Boolean)
 
 class Client(db.Model):
+    __tablename__ = 'client'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60))
     surname = db.Column(db.String(60))
     phone = db.Column(db.String(60))
     email = db.Column(db.String(60))
+    sex = db.relationship("Sex")
     sex_id = db.Column(db.Integer, db.ForeignKey("sex.id"))
     age = db.Column(db.SmallInteger)
     is_married = db.Column(db.Boolean)
 
 class Sex(db.Model):
+    __tablename__ = 'sex'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60))
 
 class Employee(db.Model):
+    __tablename__ = 'employee'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60))
     surname = db.Column(db.String(60))
     phone = db.Column(db.String(60))
     email = db.Column(db.String(60))
+    sex = db.relationship("Sex")
     sex_id = db.Column(db.Integer, db.ForeignKey("sex.id"))
     age = db.Column(db.SmallInteger)
+    role = db.relationship("Role")
     role_id = db.Column(db.Integer, db.ForeignKey("role.id"))
     salary = db.Column(db.Integer)
 
 class Role(db.Model):
+    __tablename__ = 'role'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60))
     job_grade = db.Column(db.SmallInteger)
