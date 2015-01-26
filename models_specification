@@ -1,0 +1,45 @@
+room: id, number, floor, type (for 2,3,4 ppl), price_per_day, state 
+
+room_state_type: ( id, room_state_name )
+-rented
+-reserved
+-ready_for_rent
+-need_cleaning
+-need_repair
+
+room_type: id, type ( int: 2,3,4)
+
+room_rental: id, date_start, date_end, room_id, client_id, features
+
+feature_type: ( id, feature_name, additional_cost )
+Examples :
+-TV, 5$/day
+-Internet, 10$/day
+-Food, 30$/day
+-Unlimited Alcohol 100$/day
+
+ordered_features (id, room_rental_id):
+list of ordered fueatures
+
+order: id, room_rental_id, client_id, cost, is_paid
+
+client: id, name, surname, phone, email, sex, age, is_married
+
+sex_type ( id, sex_name )
+-male
+-female
+-other
+
+employee: id, name, surname, phone, email, sex, age, role, salary
+
+role_type: ( id, role_name, job_grade )
+Examples
+-cleaning-lady, 2
+-hotel-boy, 2
+-receptionist, 3
+-repairman, 3
+-gardener, 3
+-kitchen-assistant, 3
+-bodyguard, 4
+-chef, 5
+-manager, 7

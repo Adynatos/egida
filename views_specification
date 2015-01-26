@@ -1,0 +1,59 @@
+Types of users:
+
+-admin
+-client
+-guest
+
+
+Views:
+
+@admin, client, guest
+/avaliable_rooms
+    List ( only rooms that have: state==ready_for_rent )
+    type ( 2/3/4), price, floor, room_number ( link to /room/<room_id> )
+
+@admin, client, guest
+/room/<room_id>
+    number, floor, type (for 2,3,4 ppl), price_per_day
+    avaliable: Yes (state==ready_for_rent) / No(state!=ready_for_rent)
+    @admin_only
+    state of room
+
+@admin
+/order/<order_id>
+    order: room_rental_id, client_id ( link /client/<client_id> ), cost, is_paid
+    room_rental: room_rental_id->date_start, room_rental_id->date_end, room_id ( linkt /room/<room_id> )
+    Features: list of ordered features
+
+@admin
+/client/<client_id>
+    name, surname, phone, email, sex, age, is_married
+    client's orders: list
+
+@client
+/my_order
+    room ( link to /room/<room_id>), room_rental->date_start,
+    room_rental->date_end, room_rental->features, bill->cost, bill->is_paid
+
+@admin
+/all_rooms
+    List ( all rooms )
+    type ( 2/3/4), price, floor, room_number ( link to /room/<room_id> ), state
+
+@admin
+/rented_rooms
+    List ( all rooms that have: state==rented )
+
+@admin
+/reserved_rooms
+
+@admin
+/all_employees
+    List of all employees:
+    (name, surname, phone, email, sex, age, role, salary)
+
+@admin
+/employees_by_role
+    List:
+    role, quantity, job_grade
+
