@@ -9,6 +9,77 @@ from app import app
 import flask.ext.whooshalchemy as whooshalchemy
 
 
+class Room(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    number = db.Column(db.Integer)
+    floor = db.Column(db.Integer)
+    room_type_id = (db.Integer, db.ForeignKey('room_type.id'))
+    price_per_day = db.Column(db.Integer)
+    room_state_id = (db.Integer, db.ForeignKey('room_state.id'))
+
+class Room_state(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    state_name = db.Column(db.String(120))
+
+class Room_type(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    r_type = db.Column(db.SmallInteger)
+
+class Room_rental(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    room_id = (db.Integer, db.ForeignKey('Room.id'))
+    client_id = (db.Integer, db.ForeignKey('client.id'))
+    ordered_features_id = (db.Integer, db.ForeignKey('ordered_features.id'))
+    date_start = db.Column(db.Date)
+    date_end = db.Column(db.Date)
+
+class Extra_features(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(60))
+    price = db.Column(db.Integer)
+
+class Ordered_features(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    room_id = (db.Integer, db.ForeignKey('room.id'))
+    features = (db.Integer, db.ForeignKey('extra_features.id'))
+
+class Order(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    room_id = (db.Integer, db.ForeignKey('room.id'))
+    client_id = (db.Integer, db.ForeignKey('client.id'))
+    cost = db.Column(db.Integer)
+    is_paid = db.Column(db.Boolean)
+
+class Client(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(60))
+    surname = db.Column(db.String(60))
+    phone = db.Column(db.String(60))
+    email = db.Column(db.String(60))
+    sex_id = db.Column(db.Integer, db.ForeignKey("sex.id"))
+    age = db.Column(db.SmallInteger)
+    is_married = db.Column(db.Boolean)
+
+class Sex(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(60))
+
+class Employee(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(60))
+    surname = db.Column(db.String(60))
+    phone = db.Column(db.String(60))
+    email = db.Column(db.String(60))
+    sex_id = db.Column(db.Integer, db.ForeignKey("sex.id"))
+    age = db.Column(db.SmallInteger)
+    role_id = db.Column(db.Integer, db.ForeignKey("role.id"))
+    salary = db.Column(db.Integer)
+
+class Role(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(60))
+    job_grade = db.Column(db.SmallInteger)
+
 ROLE_USER = 0
 ROLE_ADMIN = 1
 
