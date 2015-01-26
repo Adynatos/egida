@@ -1,4 +1,4 @@
-"""This module contains functions with handle http request for given url"""
+"""This module contains functions which handle http request for given url"""
 
 from flask import render_template, url_for, redirect, session, g, request, flash
 from models import Post, User, Comment, Tag, ROLE_USER, ROLE_ADMIN

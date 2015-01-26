@@ -1,4 +1,4 @@
-#!flask/bin/python
+#!venv/bin/python
 """ This module imports Flask-Manager script, adds our create_db command
 and run it. You can pass following arguments:
     * create_db => creates sqlite database and all the tables
