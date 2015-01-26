@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Hello {{g.user.nickname}}</h1>
+<br><br>
+<h4>Type new post:</h4>
+<br>
+
+<form action="" method="post" name="post">
+    {{form.hidden_tag()}}
+    <p>
+        Room:<br>
+        {{ form.room(size = 30, maxlength = 140)}}
+    </p>        
+
+    <p>
+        Client:<br>
+        {{ form.client(size = 30, maxlength = 140)}}
+    </p>        
+
+    <p>
+        Cost:<br>
+        {{ form.cost(size = 30, maxlength = 140)}}
+    </p>        
+
+    <p>
+        Is Paid?:<br>
+        {{ form.is_paid()}}
+    </p>        
+
+    <p>
+        {% for error in form.errors.room %}
+        <span style="color: red;">[{{error}}]</span><br>
+        {% endfor %}
+    </p>
+    <input type="submit" value="Send">
+</form>
+
+{% endblock content %}

@@ -8,9 +8,31 @@ A collection of web forms used in html files.
 from flask.ext.wtf import Form
 from wtforms import TextField, BooleanField
 from wtforms.validators import Required
-#from wtforms.ext.appengine.db import model_form
+from wtforms.ext.sqlalchemy.fields import QuerySelectField
+from app.models import *
 #from models import Post
 
+class RoomForm(Form):
+    number = TextField('Title')
+    floor = TextField('Floor')
+    room_type = TextField('Room type')
+    price_per_day = TextField('Price per day')
+    room_state = TextField('Room state')
+
+class OrderForm(Form):
+    room = TextField("Room")
+    client = TextField("Client")
+    cost = TextField("Cost")
+    is_paid = BooleanField("Is paid?")
+
+class ClientForm(Form):
+    name = TextField("Name")
+    surname = TextField("Surname")
+    phone = TextField("Phone")
+    email = TextField("email")
+    sex = TextField("Sex")
+    age = TextField("Age")
+    is_married = BooleanField("Is married?")
 
 class LoginForm(Form):
     """

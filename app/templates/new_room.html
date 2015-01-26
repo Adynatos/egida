@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Hello {{g.user.nickname}}</h1>
+<br><br>
+<h4>Type new post:</h4>
+<br>
+
+<form action="" method="post" name="post">
+    {{form.hidden_tag()}}
+    <p>
+        Number:<br>
+        {{ form.number(size = 30, maxlength = 140)}}
+    </p>        
+
+    <p>
+        Floor:<br>
+        {{ form.floor(size = 30, maxlength = 140)}}
+    </p>        
+
+    <p>
+        Price:<br>
+        {{ form.price_per_day(size = 30, maxlength = 140)}}
+    </p>        
+
+    <p>
+        State:<br>
+        {{ form.room_state(size = 30, maxlength = 140)}}
+    </p>        
+
+    <p>
+        Type:<br>
+        {{ form.room_type(size = 30, maxlength = 140)}}
+    </p>        
+
+
+
+    <p>
+        {% for error in form.errors.room %}
+        <span style="color: red;">[{{error}}]</span><br>
+        {% endfor %}
+    </p>
+    <input type="submit" value="Send">
+</form>
+
+{% endblock content %}

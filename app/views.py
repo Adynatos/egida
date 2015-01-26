@@ -1,12 +1,67 @@
 """This module contains functions which handle http request for given url"""
 
 from flask import render_template, url_for, redirect, session, g, request, flash
-from models import Post, User, Comment, Tag, ROLE_USER, ROLE_ADMIN
+from models import *
 from app import lm, app, db, oid
-from forms import LoginForm, PostForm, CommentForm, SearchingForm
+from forms import *
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from datetime import datetime
 from config import MAX_SEARCH_RESULTS
+
+
+@app.route('/new_room', methods=['GET', 'POST'])
+def new_room():
+    form = RoomForm()
+    if form.validate():
+        rtype = Room_type.query.filter_by(r_type=form.room_type.data).first()
+        rstate = Room_state.query.filter_by(state_name=form.room_state.data).first()
+        room = Room(number=form.number.data, floor=form.floor.data, 
+                    room_type=rtype,
+                    price_per_day=form.price_per_day.data, 
+                    room_state=rstate)
+
+        db.session.add(room)
+        db.session.commit()
+        flash('You have succesfuly added your post.')
+        return redirect(url_for('index'))
+
+    return render_template('new_room.html', form=form, user=g.user)
+
+@app.route('/new_order', methods=['GET', 'POST'])
+def new_order():
+    form = OrderForm()
+    if form.validate():
+        room = Room.query.filter_by(number=form.room.data).first()
+        client = Client.query.filter_by(surname=form.client.data).first()
+        order = Order(room=room, client=client, 
+                    cost=form.cost.data, 
+                    is_paid=form.is_paid.data
+                    )
+
+        db.session.add(order)
+        db.session.commit()
+        flash('You have succesfuly added your post.')
+        return redirect(url_for('index'))
+
+    return render_template('new_order.html', form=form, user=g.user)
+
+#@app.route('/new_room', methods=['GET', 'POST'])
+#def new_room():
+#    form = RoomForm()
+#    if form.validate():
+#        rtype = Room_type.query.filter_by(r_type=form.room_type.data).first()
+#        rstate = Room_state.query.filter_by(state_name=form.room_state.data).first()
+#        room = Room(number=form.number.data, floor=form.floor.data, 
+#                    room_type=rtype,
+#                    price_per_day=form.price_per_day.data, 
+#                    room_state=rstate)
+#
+#        db.session.add(room)
+#        db.session.commit()
+#        flash('You have succesfuly added your post.')
+#        return redirect(url_for('index'))
+#
+#    return render_template('new_room.html', form=form, user=g.user)
 
 def get_or_create_tag(tag):
     t = Tag.query.filter_by(name=tag)
