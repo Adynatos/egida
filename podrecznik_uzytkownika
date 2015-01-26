@@ -4,11 +4,13 @@ Podręcznik użytkownika
 
 1) Przygotowanie wirtualnego środowiska
 
-Uruchamiamy skrypt install_virtualen.sh:
-$ ./install_virtualenv.sh
+pip install virtualenv
+virtualenv venv
+source venv/bin/activate
+pip install flask
+pip install -r requirements.txt
 
-Należy zwrócić uwagę na to, aby alias "python" używanej powłoki (shell) odnosił się do interpretera
-python w wersji 2. Wymagane jest również połączenie z internetem.
+( Jak zainstalować virtualenv: http://docs.python-guide.org/en/latest/dev/virtualenvs/ )
 
 2) Konfiguracja bazy danych
 
@@ -45,7 +47,7 @@ dokumentacji aplikacji.
 WAŻNE:
 
 Przy pierwszym logowaniu danego użytkowanika zostanie utworzone konto w bazie danych. Będzie ono
-identyfikowane adres e-mail. Ze względów bezpieczeństwa nowo dodane konta mają
+identyfikowane poprzez adres e-mail. Ze względów bezpieczeństwa nowo dodane konta mają
 rolę użytkownika. Aby umożliwić użytkownikowi danego konta dodawanie oraz
 modyfikację postów należy zwiększyć uprawnienia danego konta z poziomu
 użytkownika do poziomu administratora:
@@ -62,8 +64,9 @@ Importujemy bazę danych:
 Wyszukujemy użytkownika w bazie danych:
 >>> u = User.query.filter(User.email=="jan.kowalski@example.com").first()
 
+Zmeniamy rolę użytkownika na administratora:
+>>> u.role = 1
 
 Commitujemy nasze zmiany do bazy danych:
 >>> db.session.add(u)
 >>> db.session.commit()
-
