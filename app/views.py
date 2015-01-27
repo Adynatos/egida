@@ -12,22 +12,22 @@ from config import MAX_SEARCH_RESULTS
 @app.route('/all_rooms')
 def all_rooms():
     rooms = Room.query.all()
-    return render_template('list_rooms.html', rooms=rooms)
+    return render_template('list_rooms.html', rooms=rooms, keyword='All')
 
 @app.route('/avaliable_rooms')
 def avaliable_rooms():
     rooms = Room.query.filter_by(room_state=Room_state.query.filter_by(state_name='avaliable').first())
-    return render_template('list_rooms.html', rooms=rooms)
+    return render_template('list_rooms.html', rooms=rooms, keyword='Avaliable')
 
 @app.route('/reserved_rooms')
 def reserved_rooms():
     rooms = Room.query.filter_by(room_state=Room_state.query.filter_by(state_name='reserved').first())
-    return render_template('list_rooms.html', rooms=rooms)
+    return render_template('list_rooms.html', rooms=rooms, keyword='Reserved')
 
 @app.route('/rented_rooms')
 def rented_rooms():
     rooms = Room.query.filter_by(room_state=Room_state.query.filter_by(state_name='rented').first())
-    return render_template('list_rooms.html', rooms=rooms)
+    return render_template('list_rooms.html', rooms=rooms, keyword='Rented')
 
 @app.route('/all_employees')
 def all_employees():
@@ -72,7 +72,7 @@ def new_room():
 
         db.session.add(room)
         db.session.commit()
-        flash('You have succesfuly added your post.')
+        flash('You have succesfuly added your room.')
         return redirect(url_for('index'))
 
     return render_template('new_room.html', form=form, user=g.user)
@@ -90,11 +90,26 @@ def new_order():
 
         db.session.add(order)
         db.session.commit()
-        flash('You have succesfuly added your post.')
+        flash('You have succesfuly added your order.')
         return redirect(url_for('index'))
 
     return render_template('new_order.html', form=form, user=g.user)
 
+@app.route('/new_client', methods=['GET', 'POST'])
+def new_client():
+    form = ClientForm()
+    if form.validate():
+        sex = Sex.query.filter_by(name=form.sex.data).first()
+        client = Client(name=form.name.data,surname=form.surname.data,
+                        phone=form.phone.data,email=form.emails.data,
+                        sex=form.sex.data,age=form.age.data,is_married=form.is_married.data
+                        )
+        db.session.add(client)
+        db.session.commit()
+        flash('You have succesfuly added your client.')
+        return redirect(url_for('index'))
+
+    return render_template('new_client.html', form=form, user=g.user)
 #@app.route('/new_room', methods=['GET', 'POST'])
 #def new_room():
 #    form = RoomForm()

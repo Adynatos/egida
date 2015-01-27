@@ -54,14 +54,13 @@
           <a class="brand" href="{{url_for('index')}}">Egida</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li><a href="{{url_for('posts')}}">Posts</a></li>
-	      <li><a href="{{url_for('new_post')}}">Add Post</a></li>
-              <li><a href="{{url_for('index')}}">Placeholder</a></li>
-              <li> <form style="display: inline;" action="{{ url_for('search') }}"
-                  name="search" method="post"> 
-                      {{ g.searching_form.hidden_tag() }} {{ g.searching_form.search(size=20)}}
-                      <input type="submit" value="Search">
-                  </form>
+              <li><a href="{{url_for('all_rooms')}}">All rooms</a></li>
+              <li><a href="{{url_for('avaliable_rooms')}}">Avaliable rooms</a></li>
+              <li><a href="{{url_for('reserved_rooms')}}">Reserved rooms</a></li>
+              <li><a href="{{url_for('rented_rooms')}}">Rented rooms</a></li>
+              <li><a href="{{url_for('new_room')}}">Add Room</a></li>
+              <li><a href="{{url_for('new_order')}}">Add Order</a></li>
+              <li><a href="{{url_for('new_client')}}">Add Client</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
