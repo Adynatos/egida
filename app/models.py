@@ -117,6 +117,14 @@ class Employee(db.Model):
     role_id = db.Column(db.Integer, db.ForeignKey("role.id"))
     salary = db.Column(db.Integer)
 
+    @property
+    def sex_name(self):
+        return self.sex.name
+
+    @property
+    def role_name(self):
+        return self.role.name
+
 class Role(db.Model):
     __tablename__ = 'role'
     id = db.Column(db.Integer, primary_key=True)

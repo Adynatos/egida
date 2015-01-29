@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Hello {{g.user.nickname}}</h1>
+<br><br>
+<h4>Add new employee:</h4>
+<br>
+
+<form action="" method="post" name="post">
+    {{form.hidden_tag()}}
+    <p>
+        Name:<br>
+        {{ form.name(size = 30, maxlength = 140)}}
+    </p>        
+
+    <p>
+        Surname:<br>
+        {{ form.surname(size = 30, maxlength = 140)}}
+    </p>        
+
+    <p>
+        Phone:<br>
+        {{ form.phone(size = 30, maxlength = 140)}}
+    </p>        
+
+    <p>
+        E-mail:<br>
+        {{ form.email(size = 30, maxlength = 140)}}
+    </p>        
+
+    <p>
+        Sex:<br>
+        {{ form.sex(size = 30, maxlength = 140)}}
+    </p>        
+
+    <p>
+        Age:<br>
+        {{ form.age(size = 30, maxlength = 140)}}
+    </p>        
+
+    <p> Role:<br> {{ form.role()}} </p>        
+
+    <p> Salary: <br> {{ form.salary() }} </p>
+
+    <p>
+        {% for error in form.errors.room %}
+        <span style="color: red;">[{{error}}]</span><br>
+        {% endfor %}
+    </p>
+    <input type="submit" value="Send">
+</form>
+
+{% endblock content %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>{{e.name}} {{e.surname}}</h3>
+<p>Phone: {{e.phone}}</p>
+<p>E-mail: {{e.email}}</p>
+<p>Sex: {{e.sex_name}}</p>
+<p>Age: {{e.age}}</p>
+<p>Role:: {{e.role_name}}</p>
+<p>Salary: {{e.salary}}</p>
+
+{% endfor %}
+
+
+{% endblock content %}

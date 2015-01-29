@@ -32,7 +32,21 @@ class ClientForm(Form):
     email = TextField("email")
     sex = TextField("Sex")
     age = TextField("Age")
-    is_married = BooleanField("Is married?")
+    role= TextField("Role")
+
+class EmployeeForm(Form):
+    name = TextField("Name")
+    surname = TextField("Surname")
+    phone = TextField("Phone")
+    email = TextField("email")
+    sex = TextField("Sex")
+    age = TextField("Age")
+    role = TextField("Role")
+    salary = TextField("Salary")
+
+class RoleForm(Form):
+    name = TextField("Name")
+    job_grade = TextField("Job Grade")
 
 class LoginForm(Form):
     """

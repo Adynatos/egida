@@ -24,6 +24,16 @@ def all_orders():
     orders = Order.query.all()
     return render_template('list_orders.html', orders=orders)
 
+@app.route('/all_employees')
+def all_employees():
+    employees = Order.query.all()
+    return render_template('list_employees.html', employees=employees)
+
+@app.route('/all_roles')
+def all_roles():
+    roles = Order.query.all()
+    return render_template('list_roles.html', roles=roles)
+
 @app.route('/avaliable_rooms')
 def avaliable_rooms():
     rooms = Room.query.filter_by(room_state=Room_state.query.filter_by(state_name='avaliable').first())
@@ -59,10 +69,17 @@ def view_room(room_id):
 @app.route('/order/<order_id>')
 def view_order(order_id):
     order = Order.query.filter_by(id=order_id).first()
-    print type(order)
-    #print 'order cost: %s' % order.cost
-    #return 'hi'
     return render_template('view_order.html', order=order, client=order.client, room_rental=order.room_rental)
+
+@app.route('/employee/<employee_id>')
+def view_employee(employee_id):
+    employee = Employee.query.filter_by(id=order_id).first()
+    return render_template('view_employee.html', employee=employee)
+
+@app.route('/role/<role_id>')
+def view_role(role_id):
+    role = Role.query.filter_by(id=order_id).first()
+    return render_template('view_role.html', role=role)
 
 @app.route('/client/<client_id>')
 def view_client(client_id):

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Hello {{g.user.nickname}}</h1>
+<br><br>
+<h4>Add new role:</h4>
+<br>
+
+<form action="" method="post" name="post">
+    {{form.hidden_tag()}}
+    <p>
+        Role name:<br>
+        {{ form.name(size = 30, maxlength = 140)}}
+    </p>        
+
+    <p>
+        Job Grade:<br>
+        {{ form.job_grade(size = 30, maxlength = 140)}}
+    </p>        
+
+
+    <p>
+        {% for error in form.errors.room %}
+        <span style="color: red;">[{{error}}]</span><br>
+        {% endfor %}
+    </p>
+    <input type="submit" value="Send">
+</form>
+
+{% endblock content %}
