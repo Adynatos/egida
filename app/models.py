@@ -20,6 +20,14 @@ class Room(db.Model):
     room_state = db.relationship("Room_state", backref="rooms")
     room_state_id = db.Column(db.Integer, db.ForeignKey('room_state.id'))
 
+    @property
+    def r_type(self):
+        return self.room_type.r_type
+
+    @property
+    def r_state(self):
+        return self.room_state.state_name
+
 class Room_state(db.Model):
     __tablename__ = 'room_state'
     id = db.Column(db.Integer, primary_key=True)
@@ -63,9 +71,8 @@ class Ordered_features(db.Model):
 class Order(db.Model):
     __tablename__ = 'order'
     id = db.Column(db.Integer, primary_key=True)
-    #TODO: zamiast room mialo byc room_rental
-    room = db.relationship("Room", backref="orders")
-    room_id = db.Column(db.Integer, db.ForeignKey('room.id'))
+    room_rental = db.relationship("Room_rental", backref="orders")
+    room_rental_id = db.Column(db.Integer, db.ForeignKey('room_rental.id'))
     client = db.relationship("Client", backref="orders")
     client_id = db.Column(db.Integer, db.ForeignKey('client.id'))
     cost = db.Column(db.Integer)
@@ -82,6 +89,10 @@ class Client(db.Model):
     sex_id = db.Column(db.Integer, db.ForeignKey("sex.id"))
     age = db.Column(db.SmallInteger)
     is_married = db.Column(db.Boolean)
+
+    @property
+    def sex_name(self):
+        return self.sex.name
 
 class Sex(db.Model):
     __tablename__ = 'sex'

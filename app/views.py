@@ -49,14 +49,18 @@ def view_room(room_id):
 @app.route('/order/<order_id>')
 def view_order(order_id):
     order = Order.query.filter_by(id=order_id).first()
-    return render_template('view_order.html', order=order,
-                           client=order.client,
-                           room_rental=order.room_rental)
+    print type(order)
+    #print 'order cost: %s' % order.cost
+    #return 'hi'
+    return render_template('view_order.html', order=order, client=order.client, room_rental=order.room_rental)
 
 @app.route('/client/<client_id>')
 def view_client(client_id):
     client = Client.query.filter_by(id=client_id).first()
-    orders = Order.query.filter_byt(client=client)
+    print 'c sex %s' % client.sex
+    print 'c mail %s' % client.email
+    print 'c age %s' % client.age
+    orders = Order.query.filter_by(client=client)
     return render_template('view_client.html', client=client, orders=orders)
 
 @app.route('/new_room', methods=['GET', 'POST'])
@@ -81,13 +85,18 @@ def new_room():
 def new_order():
     form = OrderForm()
     if form.validate():
+        date_start = datetime.utcnow()
+        date_end = datetime.utcnow()
         room = Room.query.filter_by(number=form.room.data).first()
         client = Client.query.filter_by(surname=form.client.data).first()
-        order = Order(room=room, client=client, 
+        room_rental = Room_rental(room=room,client=client,
+                                  date_start=date_start,date_end=date_end)
+        order = Order(room_rental=room_rental, client=client, 
                     cost=form.cost.data, 
                     is_paid=form.is_paid.data
                     )
 
+        db.session.add(room_rental)
         db.session.add(order)
         db.session.commit()
         flash('You have succesfuly added your order.')
@@ -100,9 +109,13 @@ def new_client():
     form = ClientForm()
     if form.validate():
         sex = Sex.query.filter_by(name=form.sex.data).first()
+        print 'f sex %s' % form.sex.data
+        print 'f name %s' % form.name.data
+        print 'f mail %s' % form.email.data
+        print 'f age %s' % form.age.data
         client = Client(name=form.name.data,surname=form.surname.data,
-                        phone=form.phone.data,email=form.emails.data,
-                        sex=form.sex.data,age=form.age.data,is_married=form.is_married.data
+                        phone=form.phone.data,email=form.email.data,
+                        sex=sex,age=form.age.data,is_married=form.is_married.data
                         )
         db.session.add(client)
         db.session.commit()
