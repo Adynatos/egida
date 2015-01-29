@@ -14,6 +14,16 @@ def all_rooms():
     rooms = Room.query.all()
     return render_template('list_rooms.html', rooms=rooms, keyword='All')
 
+@app.route('/all_clients')
+def all_clients():
+    clients = Client.query.all()
+    return render_template('list_clients.html', clients=clients)
+
+@app.route('/all_orders')
+def all_orders():
+    orders = Order.query.all()
+    return render_template('list_orders.html', orders=orders)
+
 @app.route('/avaliable_rooms')
 def avaliable_rooms():
     rooms = Room.query.filter_by(room_state=Room_state.query.filter_by(state_name='avaliable').first())
@@ -89,6 +99,8 @@ def new_order():
         date_end = datetime.utcnow()
         room = Room.query.filter_by(number=form.room.data).first()
         client = Client.query.filter_by(surname=form.client.data).first()
+        if client is None:
+            return 'no such client'
         room_rental = Room_rental(room=room,client=client,
                                   date_start=date_start,date_end=date_end)
         order = Order(room_rental=room_rental, client=client, 

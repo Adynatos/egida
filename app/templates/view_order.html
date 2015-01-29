@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 
-<p><a href={{ url_for('view_client', client_id=client.id) }}>{{client.name}} {{client.surname}}</a><p>
-<p><a href={{ url_for('view_room', room_id=room_rental.room_id) }}>Link to room description</a><p>
+<p>Order with: <a href={{ url_for('view_client', client_id=client.id) }}>{{client.name}} {{client.surname}}</a><p>
+<p><a href={{ url_for('view_room', room_id=room_rental.room_id) }}>Room description</a><p>
 <p>Room rented from: {{ room_rental.date_start }}</p>
 <p>Room rented until: {{ room_rental.date_end }}</p>
 <p>Features:<br>

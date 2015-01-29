@@ -78,6 +78,10 @@ class Order(db.Model):
     cost = db.Column(db.Integer)
     is_paid = db.Column(db.Boolean)
 
+    @property
+    def client_name(self):
+        return self.client.surname
+
 class Client(db.Model):
     __tablename__ = 'client'
     id = db.Column(db.Integer, primary_key=True)

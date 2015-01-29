@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Clients:</h1>
+      <br><br>
+
+      {% for client in clients %}
+      <a href={{ url_for('view_client', client_id=client.id) }}>{{client.name}} {{client.surname}}</a>
+      </p>
+      <br>
+      {% endfor %}
+
+
+{% endblock content %}
